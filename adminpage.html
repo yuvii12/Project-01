@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediiQuick | Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Topbar -->
+  <header class="bg-green-600 text-white p-4 shadow-md flex justify-between items-center">
+    <h1 class="text-xl font-bold">MediiQuick Admin</h1>
+    <a href="index.html" class="text-gray-600 text-sm">
+    <button onclick="logout()" class="bg-white text-green-600 px-4 py-1 rounded hover:bg-gray-200">
+      Logout
+    </button></a>
+  </header>
+
+  <!-- Main Content -->
+  <main class="p-6 max-w-7xl mx-auto">
+    
+    <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
+
+    <!-- Summary Boxes -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">Total Medicines</h3>
+        <p class="text-xl font-bold text-green-700">62</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">Total Orders</h3>
+        <p class="text-xl font-bold text-green-700">128</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">Active Pharmacies</h3>
+        <p class="text-xl font-bold text-green-700">12</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">New Users</h3>
+        <p class="text-xl font-bold text-green-700">35</p>
+      </div>
+    </div>
+
+    <!-- Upload Form -->
+    <section class="bg-white p-6 rounded-lg shadow mb-10">
+      <h3 class="text-xl font-bold mb-4">Add New Medicine</h3>
+      <form id="upload-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" placeholder="Medicine Name" id="med-name" required class="border p-3 rounded">
+        <input type="text" placeholder="Description" id="med-desc" required class="border p-3 rounded">
+        <input type="number" placeholder="Price ₹" id="med-price" required class="border p-3 rounded">
+        <input type="text" placeholder="Image URL" id="med-image" required class="border p-3 rounded">
+        <button type="submit" class="bg-green-600 text-white p-3 rounded col-span-full hover:bg-green-700">Upload</button>
+      </form>
+    </section>
+
+    <!-- Static Medicine Table -->
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h3 class="text-xl font-bold mb-4">Recently Added Medicines</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b">
+            <th class="text-left p-2">Name</th>
+            <th class="text-left p-2">Price</th>
+            <th class="text-left p-2">Desc</th>
+            <th class="text-left p-2">Image</th>
+          </tr>
+        </thead>
+        <tbody id="med-table">
+          <!-- dynamic rows will be inserted here -->
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    
+function addMedicine() {
+  const data = {
+    name: document.getElementById("medName").value,
+    brand: document.getElementById("brand").value,
+    price: document.getElementById("price").value,
+    image: document.getElementById("image").value
+  };
+
+  fetch("http://localhost:8080/api/medicines", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(med => alert("Medicine Added: " + med.name))
+    .catch(err => console.error(err));
+}
+    // Static data array
+    let medicines = [];
+
+    document.getElementById("upload-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("med-name").value;
+      const desc = document.getElementById("med-desc").value;
+      const price = document.getElementById("med-price").value;
+      const image = document.getElementById("med-image").value;
+
+      const newMed = { name, desc, price, image };
+      medicines.push(newMed);
+
+      renderTable();
+      this.reset();
+    });
+
+    function renderTable() {
+      const table = document.getElementById("med-table");
+      table.innerHTML = medicines.map(med => `
+        <tr class="border-b">
+          <td class="p-2">${med.name}</td>
+          <td class="p-2">₹${med.price}</td>
+          <td class="p-2">${med.desc}</td>
+          <td class="p-2"><img src="${med.image}" alt="${med.name}" class="w-12 h-12 object-cover rounded"></td>
+        </tr>
+      `).join("");
+    }
+
+    function logout() {
+      window.location.href = "/admin-login.html";
+    }
+  </script>
+
+</body>
+</html>
