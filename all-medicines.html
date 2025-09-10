@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All Medicine list</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
+
+  <header class="bg-gradient-to-r from-white-600 via-yellow to-green-700 shadow p-4 flex justify-between items-center sticky top-0 z-20">
+    <div class="flex items-center gap-2">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ab4d9fc-53f8-46cf-b443-33dacb111091.png" alt="MedQuick logo with green cross medical symbol and bold typography" class="rounded-lg w-8 h-8">
+                <h1 class="text-lg font-bold text-gray-800">MediiQuick</h1>
+            </div>
+    <div class="relative">
+      <button id="cart-btn" class="relative focus:outline-none" aria-label="View cart" aria-haspopup="dialog" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l2 9" />
+        </svg>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center font-bold">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto p-6">
+    <div id="medicine-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" aria-live="polite" aria-atomic="true">
+      <!-- Medicine cards will be injected here -->
+    </div>
+  </main>
+
+   <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 md:px-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bfc1f536-3ece-41d8-a858-6d33cc6c97d6.png" alt="MedQuick logo in white" class="rounded-lg">
+                        <h3 class="text-xl font-bold">MediiQuick</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Medicines delivered at your doorstep in 30 minutes</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/mryuvrajdixit" class="text-white hover:text-green-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/Yuvraj_dixit__" class="text-white hover:text-green-400"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/mr_yuvraj_dixit__/" class="text-white hover:text-green-400"><i class="fab fa-instagram"></i></a>
+                        <a href=https://www.linkedin.com/in/yuvraj-dixit-3393422b5/" class="text-white hover:text-green-400"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <!--<li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>.-->
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Medicine Delivery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Doctor Consult</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Lab Tests</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Health Care</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset"></i> +91 7296068290</li>
+                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-envelope"></i> dixtyuvraj45@gmail.com</li>
+                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-map-marker-alt"></i> Greater Noida , UP , India</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-gray-400 text-sm">© 2025 MediiQuick by Yuvii. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Drugs Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
+      <header class="flex justify-between items-center border-b border-gray-300 p-4">
+        <h2 class="text-xl font-bold text-gray-900">Your Cart</h2>
+        <button id="cart-close-btn" aria-label="Close cart" class="text-gray-600 hover:text-gray-900 text-2xl font-bold">&times;</button>
+      </header>
+      <section id="cart-items" class="p-4 flex-grow overflow-y-auto">
+        <!-- Cart items will be rendered here -->
+      </section>
+      <footer class="border-t border-gray-300 p-4 flex justify-between items-center">
+        <div class="text-lg font-semibold text-gray-900">Total: <span id="cart-total">₹0.00</span></div>
+        <button id="checkout-btn" class="bg-green-700 hover:bg-green-800 text-white py-2 px-6 rounded font-semibold disabled:opacity-50" disabled>Checkout</button>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const medicines = [
+      { id: 1, name: "Paracetamol", usage: "Pain reliever and fever reducer", price: 50, dose: "500mg", image: "https://share.google/images/VHM9DnH6QwTiKep2f" },
+      { id: 2, name: "Ibuprofen", usage: "Reduces inflammation and pain", price: 80, dose: "200mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Ibuprofen_200mg_tablets.jpg/220px-Ibuprofen_200mg_tablets.jpg" },
+      { id: 3, name: "Amoxicillin", usage: "Antibiotic for bacterial infections", price: 120, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Amoxicillin_capsules.jpg/220px-Amoxicillin_capsules.jpg" },
+      { id: 4, name: "Azithromycin", usage: "Antibiotic for respiratory infections", price: 150, dose: "250mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Azithromycin_250mg_tablets.jpg/220px-Azithromycin_250mg_tablets.jpg" },
+      { id: 5, name: "Ciprofloxacin", usage: "Antibiotic for urinary tract infections", price: 130, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ciprofloxacin_500mg_tablets.jpg/220px-Ciprofloxacin_500mg_tablets.jpg" },
+      { id: 6, name: "Metformin", usage: "Controls blood sugar in type 2 diabetes", price: 90, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Metformin_500mg_tablets.jpg/220px-Metformin_500mg_tablets.jpg" },
+      { id: 7, name: "Atorvastatin", usage: "Lowers cholesterol", price: 110, dose: "20mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atorvastatin_20mg_tablets.jpg/220px-Atorvastatin_20mg_tablets.jpg" },
+      { id: 8, name: "Losartan", usage: "Treats high blood pressure", price: 100, dose: "50mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Losartan_50mg_tablets.jpg/220px-Losartan_50mg_tablets.jpg" },
+      { id: 9, name: "Omeprazole", usage: "Reduces stomach acid", price: 70, dose: "20mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Omeprazole_capsules.jpg/220px-Omeprazole_capsules.jpg" },
+      { id: 10, name: "Pantoprazole", usage: "Treats acid reflux and ulcers", price: 75, dose: "40mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Pantoprazole_40mg_tablets.jpg/220px-Pantoprazole_40mg_tablets.jpg" },
+    ];
+
+    // Replicate to 90 items for demo
+    while (medicines.length < 90) {
+      const base = medicines[medicines.length % 10];
+      medicines.push({
+        id: medicines.length + 1,
+        name: base.name + " " + (medicines.length + 1),
+        usage: base.usage,
+        price: base.price,
+        dose: base.dose,
+        image: base.image
+      });
+    }
+
+    const medicineList = document.getElementById('medicine-list');
+    const cartCount = document.getElementById('cart-count');
+    const cartModal = document.getElementById('cart-modal');
+    const cartCloseBtn = document.getElementById('cart-close-btn');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const cartBtn = document.getElementById('cart-btn');
+
+    let cart = {};
+
+    function formatPrice(price) {
+      return "₹" + price.toFixed(2);
+    }
+
+    function renderMedicines() {
+      medicineList.innerHTML = '';
+      medicines.forEach(med => {
+        const discountPrice = med.price * 0.8; // 20% discount
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-lg shadow-lg border border-gray-300 p-4 flex flex-col hover:shadow-2xl transition-shadow";
+
+        card.innerHTML = `
+          <img src="${med.image}" alt="${med.name} bottle" class="w-full h-40 object-contain rounded-md mb-3" loading="lazy" />
+          <h2 class="text-xl font-semibold text-gray-900 mb-1">${med.name} <span class="text-green-700 font-normal">(${med.dose})</span></h2>
+          <p class="text-gray-700 text-sm mb-3">${med.usage}</p>
+          <div class="mb-4">
+            <span class="line-through text-gray-400 mr-2">${formatPrice(med.price)}</span>
+            <span class="text-green-600 font-bold text-lg">${formatPrice(discountPrice)}</span>
+            <span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">20% OFF</span>
+          </div>
+          <div class="mt-auto">
+            <button aria-label="Add ${med.name} to cart" data-id="${med.id}" class="add-to-cart bg-green-700 hover:bg-green-800 text-white py-2 rounded w-full transition">Add to Cart</button>
+          </div>
+        `;
+
+        medicineList.appendChild(card);
+      });
+    }
+
+    function updateCartCount() {
+      const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+      cartCount.textContent = totalItems;
+      checkoutBtn.disabled = totalItems === 0;
+    }
+
+    function updateCardQuantity(medId) {
+      const card = [...medicineList.children].find(card => {
+        const btn = card.querySelector('button.add-to-cart, div.quantity-controls');
+        if (!btn) return false;
+        if (btn.dataset.id) return parseInt(btn.dataset.id) === medId;
+        const qtyDiv = card.querySelector('div.quantity-controls');
+        return qtyDiv && parseInt(qtyDiv.dataset.id) === medId;
+      });
+
+      if (!card) return;
+
+      const quantity = cart[medId] || 0;
+      const container = card.querySelector('div.mt-auto');
+
+      if (quantity === 0) {
+        container.innerHTML = `
+          <button aria-label="Add ${medicines[medId - 1].name} to cart" data-id="${medId}" class="add-to-cart bg-green-700 hover:bg-green-800 text-white py-2 rounded w-full transition">Add to Cart</button>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="quantity-controls flex items-center justify-center space-x-3" data-id="${medId}">
+            <button aria-label="Decrease quantity of ${medicines[medId - 1].name}" class="decrease bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold rounded px-3 py-1 select-none">−</button>
+            <span class="font-semibold text-lg text-gray-900">${quantity}</span>
+            <button aria-label="Increase quantity of ${medicines[medId - 1].name}" class="increase bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 select-none">+</button>
+          </div>
+        `;
+      }
+    }
+
+    function addToCart(id) {
+      if (!cart[id]) {
+        cart[id] = 1;
+      } else {
+        cart[id]++;
+      }
+      updateCardQuantity(id);
+      updateCartCount();
+    }
+
+    function increaseQuantity(id) {
+      if (!cart[id]) cart[id] = 0;
+      cart[id]++;
+      updateCardQuantity(id);
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function decreaseQuantity(id) {
+      if (!cart[id]) return;
+      cart[id]--;
+      if (cart[id] <= 0) {
+        delete cart[id];
+      }
+      updateCardQuantity(id);
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      cartItemsContainer.innerHTML = '';
+      const cartIds = Object.keys(cart);
+      if (cartIds.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="text-center text-gray-600">Your cart is empty.</p>';
+        cartTotalEl.textContent = formatPrice(0);
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      let total = 0;
+
+      cartIds.forEach(idStr => {
+        const id = parseInt(idStr);
+        const med = medicines.find(m => m.id === id);
+        const quantity = cart[id];
+        const discountPrice = med.price * 0.8;
+        const subtotal = discountPrice * quantity;
+        total += subtotal;
+
+        const item = document.createElement('div');
+        item.className = "flex items-center space-x-4 border-b border-gray-200 py-3";
+
+        item.innerHTML = `
+          <img src="${med.image}" alt="${med.name} bottle" class="w-16 h-16 object-contain rounded" />
+          <div class="flex-grow">
+            <h3 class="font-semibold text-gray-900">${med.name} <span class="text-green-700 font-normal">(${med.dose})</span></h3>
+            <p class="text-gray-700 text-sm">${med.usage}</p>
+            <p class="text-gray-900 font-semibold mt-1">Price: ${formatPrice(discountPrice)} × ${quantity} = ${formatPrice(subtotal)}</p>
+          </div>
+          <div class="flex flex-col items-center space-y-1">
+            <button aria-label="Increase quantity of ${med.name}" class="increase-cart bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 select-none">+</button>
+            <span class="font-semibold text-lg text-gray-900">${quantity}</span>
+            <button aria-label="Decrease quantity of ${med.name}" class="decrease-cart bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold rounded px-3 py-1 select-none">−</button>
+            <button aria-label="Remove ${med.name} from cart" class="remove-cart text-red-600 hover:text-red-800 text-sm mt-1">Remove</button>
+          </div>
+        `;
+
+        cartItemsContainer.appendChild(item);
+      });
+
+      cartTotalEl.textContent = formatPrice(total);
+      checkoutBtn.disabled = false;
+    }
+
+    // Event delegation for medicine list buttons
+    medicineList.addEventListener('click', e => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const id = parseInt(e.target.dataset.id);
+        addToCart(id);
+      } else if (e.target.classList.contains('increase')) {
+        const parent = e.target.closest('div.quantity-controls');
+        const id = parseInt(parent.dataset.id);
+        increaseQuantity(id);
+      } else if (e.target.classList.contains('decrease')) {
+        const parent = e.target.closest('div.quantity-controls');
+        const id = parseInt(parent.dataset.id);
+        decreaseQuantity(id);
+      }
+    });
+
+    // Event delegation for cart modal buttons
+    cartItemsContainer.addEventListener('click', e => {
+      const itemDiv = e.target.closest('div.flex.items-center');
+      if (!itemDiv) return;
+
+      const medName = itemDiv.querySelector('h3').textContent;
+      // Find medicine id by name (safe because names are unique here)
+      const med = medicines.find(m => medName.includes(m.name));
+      if (!med) return;
+      const id = med.id;
+
+      if (e.target.classList.contains('increase-cart')) {
+        increaseQuantity(id);
+      } else if (e.target.classList.contains('decrease-cart')) {
+        decreaseQuantity(id);
+      } else if (e.target.classList.contains('remove-cart')) {
+        delete cart[id];
+        updateCardQuantity(id);
+        updateCartCount();
+        renderCartItems();
+      }
+    });
+
+    // Cart modal open/close
+    cartBtn.addEventListener('click', () => {
+      cartModal.classList.remove('hidden');
+      cartBtn.setAttribute('aria-expanded', 'true');
+      renderCartItems();
+      // Trap focus inside modal (optional enhancement)
+      cartCloseBtn.focus();
+    });
+
+    cartCloseBtn.addEventListener('click', () => {
+      cartModal.classList.add('hidden');
+      cartBtn.setAttribute('aria-expanded', 'false');
+      cartBtn.focus();
+    });
+
+    
+    // Close modal on outside click
+    cartModal.addEventListener('click', e => {
+      if (e.target === cartModal) {
+        cartModal.classList.add('hidden');
+        cartBtn.setAttribute('aria-expanded', 'false');
+        cartBtn.focus();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !cartModal.classList.contains('hidden')) {
+        cartModal.classList.add('hidden');
+        cartBtn.setAttribute('aria-expanded', 'false');
+        cartBtn.focus();
+      }
+    });
+
+    
+
+    // Checkout button click (demo)
+    checkoutBtn.addEventListener('click', () => {
+      alert('Checkout functionality is not implemented in this demo.');
+    });
+
+    renderMedicines();
+    updateCartCount();
+  </script>
+
+</body>
+</html>
