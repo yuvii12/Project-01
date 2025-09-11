@@ -32,14 +32,41 @@
                     </div>
                 </div>
             </div>
-                <div class="relative">
+               <div class="flex items-center space-x-4 relative">
+      <button id="account-btn" class="text-white bg-green-700 hover:bg-green-800 px-4 py-2 rounded font-semibold focus:outline-none" aria-haspopup="true" aria-expanded="false">
+        My Account
+      </button>
       <button id="cart-btn" class="relative focus:outline-none" aria-label="View cart" aria-haspopup="dialog" aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l2 9" />
         </svg>
         <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center font-bold">0</span>
       </button>
+
+      <!-- Account dropdown -->
+      <div id="account-dropdown" class="hidden absolute right-0 top-full mt-2 bg-white rounded shadow-lg w-48 z-30">
+        <ul class="py-2">
+          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Profile</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Orders</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
+        </ul>
+      </div>
     </div>
+    <script>
+          const accountBtn = document.getElementById('account-btn');
+  const dropdown = document.getElementById('account-dropdown');
+  accountBtn.addEventListener('click', () => {
+    const isHidden = dropdown.classList.contains('hidden');
+    if (isHidden) {
+      dropdown.classList.remove('hidden');
+      accountBtn.setAttribute('aria-expanded', 'true');
+    } else {
+      dropdown.classList.add('hidden');
+      accountBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  </script>
+
             
             <!--<div class="hidden md:flex items-center gap-4">
                 <button onclick="window.location.href='login.html'" class="font-medium text-gray-700 hover:text-green-600">Login/Signup</button>
@@ -584,6 +611,8 @@
                     }, 1000);
                 }
             });
+
+            
             
             // Medicine search handler
             function searchMedicines() {
@@ -599,6 +628,7 @@
                 }
             });
         });
+        
     </script>
 </body>
 </html>
