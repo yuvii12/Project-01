@@ -1,413 +1,704 @@
-<!DOCTYPE html>
-<html lang="en" >
+<!doctype html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>All Medicine list</title>
-  <!-- Tailwind CSS CDN -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MediiQuick — 20 Medicines</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
 
-  <header class="bg-gradient-to-r from-white-600 via-yellow to-green-700 shadow p-4 flex justify-between items-center sticky top-0 z-20">
-    <div class="flex items-center gap-2">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ab4d9fc-53f8-46cf-b443-33dacb111091.png" alt="MedQuick logo with green cross medical symbol and bold typography" class="rounded-lg w-8 h-8">
-                <h1 class="text-lg font-bold text-gray-800">MediiQuick</h1>
-            </div>
-            <div class="flex items-center space-x-4 relative">
-          <button id="account-btn" class="text-white bg-green-700 hover:bg-green-800 px-4 py-2 rounded font-semibold focus:outline-none" aria-haspopup="true" aria-expanded="false">
-       My Account
+<header
+  class="bg-gradient-to-r from-white via-yellow-200 to-green-700 shadow p-4 flex justify-between items-center sticky top-0 z-20">
+  <div class="flex items-center gap-2">
+    <img
+      src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ab4d9fc-53f8-46cf-b443-33dacb111091.png"
+      alt="MedQuick logo with green cross medical symbol and bold typography" class="rounded-lg w-8 h-8">
+    <h1 class="text-lg font-bold text-gray-800">MediiQuick</h1>
+  </div>
+
+  <!-- Right side: Account + Cart -->
+  <div class="flex items-center gap-4">
+    <!-- Account wrapper is relative so dropdown can be positioned -->
+    <div class="relative">
+      <button id="account-btn"
+        class="flex items-center gap-2 text-white bg-green-700 hover:bg-green-800 px-4 py-2 rounded font-semibold focus:outline-none"
+        aria-haspopup="true" aria-expanded="false" aria-controls="account-dropdown">
+        <span>My Account</span>
+        <!-- arrow that will rotate -->
+        <svg id="account-arrow" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
-        <!--<svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l2 9" />
-        </svg>--->
-        
-       <!-- Account dropdown -->
-      <div id="account-dropdown" class="hidden absolute right-0 top-full mt-2 bg-white rounded shadow-lg w-48 z-30">
-        <ul class="py-2">
-          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Profile</a></li>
-          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Orders</a></li>
-          <li><a href="#" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
+
+      <!-- Account dropdown -->
+      <div id="account-dropdown"
+        class="hidden absolute right-0 mt-2 bg-white rounded shadow-lg w-48 z-30 ring-1 ring-black ring-opacity-5"
+        role="menu" aria-labelledby="account-btn">
+        <ul class="py-2" role="none">
+          <li role="none"><a href="#" class="block px-4 py-2 hover:bg-green-100" role="menuitem">Profile</a></li>
+          <li role="none"><a href="#" class="block px-4 py-2 hover:bg-green-100" role="menuitem">Orders</a></li>
+          <li role="none"><a href="#" class="block px-4 py-2 hover:bg-green-100" role="menuitem">Logout</a></li>
         </ul>
       </div>
     </div>
+
+    <!-- Cart -->
     <div class="relative">
-      <button id="cart-btn" class="relative focus:outline-none" aria-label="View cart" aria-haspopup="dialog" aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l2 9" />
+      <button id="cart-btn" class="relative focus:outline-none" aria-label="View cart">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-black" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l2 9" />
         </svg>
-        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center font-bold">0</span>
+        <span id="cart-count"
+          class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center font-bold">0</span>
       </button>
     </div>
-          <button id="cart-btn" class="relative focus:outline-none" aria-label="View cart" aria-haspopup="dialog" aria-expanded="false">
+  </div>
+</header>  <main class="flex-grow container mx-auto p-6">
+    <h2 class="text-2xl font-semibold mb-4">All Medicines (20)</h2>
+
+    <div id="medicine-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <!-- 1 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="1" data-name="Paracetamol"
+        data-dose="500mg" data-price="50">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-1.jpg" alt="Paracetamol" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Paracetamol <span class="text-sm text-gray-600">(500mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Pain reliever and fever reducer</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹50.00</span><span
+            class="text-green-600 font-bold text-lg">₹40.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="1">Add to Cart</button></div>
+      </div>
+
+      <!-- 2 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="2" data-name="Ibuprofen"
+        data-dose="200mg" data-price="80">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-2.jpg" alt="Ibuprofen" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Ibuprofen <span class="text-sm text-gray-600">(200mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Reduces inflammation and pain</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹80.00</span><span
+            class="text-green-600 font-bold text-lg">₹64.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="2">Add to Cart</button></div>
+      </div>
+
+      <!-- 3 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="3" data-name="Amoxicillin"
+        data-dose="500mg" data-price="120">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-3.jpg" alt="Amoxicillin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Amoxicillin <span class="text-sm text-gray-600">(500mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Antibiotic</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹120.00</span><span
+            class="text-green-600 font-bold text-lg">₹96.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="3">Add to Cart</button></div>
+      </div>
+
+      <!-- 4 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="4" data-name="Azithromycin"
+        data-dose="250mg" data-price="150">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-4.jpg" alt="Azithromycin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Azithromycin <span class="text-sm text-gray-600">(250mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Respiratory infections</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹150.00</span><span
+            class="text-green-600 font-bold text-lg">₹120.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="4">Add to Cart</button></div>
+      </div>
+
+      <!-- 5 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="5" data-name="Ciprofloxacin"
+        data-dose="500mg" data-price="130">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-5.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Ciprofloxacin <span class="text-sm text-gray-600">(500mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">UTI antibiotic</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹130.00</span><span
+            class="text-green-600 font-bold text-lg">₹104.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="5">Add to Cart</button></div>
+      </div>
 
 
+      <!-- 6 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="6" data-name="Metformin"
+        data-dose="500mg" data-price="90">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-6.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Metformin <span class="text-sm text-gray-600">(500mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Diabetes control</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹90.00</span><span
+            class="text-green-600 font-bold text-lg">₹72.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="6">Add to Cart</button></div>
+      </div>
 
-  </header>
+      <!-- 7 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="7" data-name="Atorvastatin"
+        data-dose="20mg" data-price="110">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-7.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Atorvastatin <span class="text-sm text-gray-600">(20mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Cholesterol</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹110.00</span><span
+            class="text-green-600 font-bold text-lg">₹88.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="7">Add to Cart</button></div>
+      </div>
 
-  <main class="flex-grow container mx-auto p-6">
-    <div id="medicine-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" aria-live="polite" aria-atomic="true">
-      <!-- Medicine cards will be injected here -->
+      <!-- 8 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="8" data-name="Losartan"
+        data-dose="50mg" data-price="100">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-8.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Losartan <span class="text-sm text-gray-600">(50mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Blood pressure</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹100.00</span><span
+            class="text-green-600 font-bold text-lg">₹80.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="8">Add to Cart</button></div>
+      </div>
+
+      <!-- 9 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="9" data-name="Omeprazole"
+        data-dose="20mg" data-price="70">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-9.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Omeprazole <span class="text-sm text-gray-600">(20mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Stomach acid</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹70.00</span><span
+            class="text-green-600 font-bold text-lg">₹56.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="9">Add to Cart</button></div>
+      </div>
+
+      <!-- 10 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="10" data-name="Pantoprazole"
+        data-dose="40mg" data-price="75">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-10.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Pantoprazole <span class="text-sm text-gray-600">(40mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Acid reflux</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹75.00</span><span
+            class="text-green-600 font-bold text-lg">₹60.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="10">Add to Cart</button></div>
+      </div>
+
+      <!-- 11 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="11" data-name="Levothyroxine"
+        data-dose="50mcg" data-price="160">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-11.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Levothyroxine <span class="text-sm text-gray-600">(50mcg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Thyroid hormone</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹160.00</span><span
+            class="text-green-600 font-bold text-lg">₹128.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="11">Add to Cart</button></div>
+      </div>
+
+      <!-- 12 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="12" data-name="Amlodipine"
+        data-dose="5mg" data-price="85">
+      <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+        <img src="images/med-12.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+      </div>
+        <h3 class="text-lg font-semibold">Amlodipine <span class="text-sm text-gray-600">(5mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Blood pressure</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹85.00</span><span
+            class="text-green-600 font-bold text-lg">₹68.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="12">Add to Cart</button></div>
+      </div>
+
+      <!-- 13 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="13" data-name="Simvastatin"
+        data-dose="20mg" data-price="120">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-13.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Simvastatin <span class="text-sm text-gray-600">(20mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Lowers cholesterol</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹120.00</span><span
+            class="text-green-600 font-bold text-lg">₹96.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="13">Add to Cart</button></div>
+      </div>
+
+      <!-- 14 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="14" data-name="Clopidogrel"
+        data-dose="75mg" data-price="220">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-14.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Clopidogrel <span class="text-sm text-gray-600">(75mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Prevents clots</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹220.00</span><span
+            class="text-green-600 font-bold text-lg">₹176.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="14">Add to Cart</button></div>
+      </div>
+
+      <!-- 15 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="15" data-name="Sertraline"
+        data-dose="50mg" data-price="180">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-15.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+        <h3 class="text-lg font-semibold">Sertraline <span class="text-sm text-gray-600">(50mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Antidepressant</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹180.00</span><span
+            class="text-green-600 font-bold text-lg">₹144.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="15">Add to Cart</button></div>
+      </div>
+
+      <!-- 16 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="16" data-name="Fluoxetine"
+        data-dose="20mg" data-price="170">
+      <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+        <img src="images/med-16.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+      </div>
+        <h3 class="text-lg font-semibold">Fluoxetine <span class="text-sm text-gray-600">(20mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Antidepressant</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹170.00</span><span
+            class="text-green-600 font-bold text-lg">₹136.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="16">Add to Cart</button></div>
+      </div>
+
+      <!-- 17 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="17" data-name="Cetirizine"
+        data-dose="10mg" data-price="60">
+      <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+        <img src="images/med-17.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+      </div>
+        <h3 class="text-lg font-semibold">Cetirizine <span class="text-sm text-gray-600">(10mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Allergy relief</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹60.00</span><span
+            class="text-green-600 font-bold text-lg">₹48.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="17">Add to Cart</button></div>
+      </div>
+
+      <!-- 18 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="18" data-name="Montelukast"
+        data-dose="10mg" data-price="140">
+      <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+        <img src="images/med-18.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+      </div>
+        <h3 class="text-lg font-semibold">Montelukast <span class="text-sm text-gray-600">(10mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Asthma & allergy</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹140.00</span><span
+            class="text-green-600 font-bold text-lg">₹112.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="18">Add to Cart</button></div>
+      </div>
+
+      <!-- 19 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="19" data-name="Salbutamol Inhaler"
+        data-dose="100mcg" data-price="220">
+        <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+          <img src="images/med-19.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+        </div>
+         <h3 class="text-lg font-semibold">Salbutamol Inhaler <span class="text-sm text-gray-600">(100mcg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Bronchospasm relief</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹220.00</span><span
+            class="text-green-600 font-bold text-lg">₹176.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="19">Add to Cart</button></div>
+      </div>
+
+      <!-- 20 -->
+      <div class="med-card bg-white rounded-lg shadow p-4 flex flex-col" data-id="20" data-name="Prednisone"
+        data-dose="10mg" data-price="130">
+      <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded mb-3">
+        <img src="images/med-20.jpg" alt="Ciprofloxacin" class="max-w-full max-h-full object-contain" loading="lazy">
+      </div>
+        <h3 class="text-lg font-semibold">Prednisone <span class="text-sm text-gray-600">(10mg)</span></h3>
+        <p class="text-gray-700 text-sm my-2">Steroid for inflammation</p>
+        <div class="mb-3"><span class="line-through text-gray-400 mr-2">₹130.00</span><span
+            class="text-green-600 font-bold text-lg">₹104.00</span><span
+            class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">20% OFF</span></div>
+        <div class="mt-auto"><button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded"
+            data-id="20">Add to Cart</button></div>
+      </div>
+
     </div>
   </main>
 
-   <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 px-4 md:px-8">
+  
+
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white py-12 px-4 md:px-8">
         <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bfc1f536-3ece-41d8-a858-6d33cc6c97d6.png" alt="MedQuick logo in white" class="rounded-lg">
-                        <h3 class="text-xl font-bold">MediiQuick</h3>
-                    </div>
-                    <p class="text-gray-400 mb-4">Medicines delivered at your doorstep in 30 minutes</p>
-                    <div class="flex gap-4">
-                        <a href="https://www.facebook.com/mryuvrajdixit" class="text-white hover:text-green-400"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://x.com/Yuvraj_dixit__" class="text-white hover:text-green-400"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/mr_yuvraj_dixit__/" class="text-white hover:text-green-400"><i class="fab fa-instagram"></i></a>
-                        <a href=https://www.linkedin.com/in/yuvraj-dixit-3393422b5/" class="text-white hover:text-green-400"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Company</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
-                        <!--<li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>.-->
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Services</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Medicine Delivery</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Doctor Consult</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Lab Tests</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Health Care</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Contact Us</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset"></i> +91 7296068290</li>
-                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-envelope"></i> dixtyuvraj45@gmail.com</li>
-                        <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-map-marker-alt"></i> Greater Noida , UP , India</li>
-                    </ul>
-                </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div class="flex items-center gap-2 mb-4">
+                <img
+                  src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bfc1f536-3ece-41d8-a858-6d33cc6c97d6.png"
+                  alt="MedQuick logo in white" class="rounded-lg">
+                <h3 class="text-xl font-bold">MediiQuick</h3>
+              </div>
+              <p class="text-gray-400 mb-4">Medicines delivered at your doorstep in 30 minutes</p>
+              <div class="flex gap-4">
+                <a href="https://www.facebook.com/mryuvrajdixit" class="text-white hover:text-green-400"><i
+                    class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/Yuvraj_dixit__" class="text-white hover:text-green-400"><i
+                    class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/mr_yuvraj_dixit__/" class="text-white hover:text-green-400"><i
+                    class="fab fa-instagram"></i></a>
+                <a href=https://www.linkedin.com/in/yuvraj-dixit-3393422b5/" class="text-white hover:text-green-400"><i
+                    class="fab fa-linkedin-in"></i></a>
+              </div>
             </div>
-            
-            <div class="border-t border-gray-800 pt-8">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-gray-400 text-sm">© 2025 MediiQuick by Yuvii. All rights reserved.</p>
-                    <div class="flex gap-6">
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">Drugs Policy</a>
-                    </div>
-                </div>
+      
+            <div>
+              <h4 class="font-bold mb-4 text-lg">Company</h4>
+              <ul class="space-y-2">
+                <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                <!--<li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>.-->
+              </ul>
             </div>
+      
+            <div>
+              <h4 class="font-bold mb-4 text-lg">Services</h4>
+              <ul class="space-y-2">
+                <li><a href="#" class="text-gray-400 hover:text-white">Medicine Delivery</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white">Doctor Consult</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white">Lab Tests</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white">Health Care</a></li>
+              </ul>
+            </div>
+      
+            <div>
+              <h4 class="font-bold mb-4 text-lg">Contact Us</h4>
+              <ul class="space-y-2">
+                <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset"></i> +91 7296068290
+                </li>
+                <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-envelope"></i>
+                  dixtyuvraj45@gmail.com</li>
+                <li class="flex items-center gap-2 text-gray-400"><i class="fas fa-map-marker-alt"></i> Greater
+                  Noida , UP , India</li>
+              </ul>
+            </div>
+          </div>
+      
+          <div class="border-t border-gray-800 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p class="text-gray-400 text-sm">© 2025 MediiQuick by Yuvii. All rights reserved.</p>
+              <div class="flex gap-6">
+                <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm">Drugs Policy</a>
+              </div>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
 
   <!-- Cart Modal -->
   <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 flex items-center justify-center p-4">
     <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
       <header class="flex justify-between items-center border-b border-gray-300 p-4">
         <h2 class="text-xl font-bold text-gray-900">Your Cart</h2>
-        <button id="cart-close-btn" aria-label="Close cart" class="text-gray-600 hover:text-gray-900 text-2xl font-bold">&times;</button>
+        <button id="cart-close-btn" class="text-gray-600 hover:text-gray-900 text-2xl font-bold">&times;</button>
       </header>
-      <section id="cart-items" class="p-4 flex-grow overflow-y-auto">
-        <!-- Cart items will be rendered here -->
-      </section>
+      <section id="cart-items" class="p-4 flex-grow overflow-y-auto"></section>
       <footer class="border-t border-gray-300 p-4 flex justify-between items-center">
         <div class="text-lg font-semibold text-gray-900">Total: <span id="cart-total">₹0.00</span></div>
-        <button id="checkout-btn" class="bg-green-700 hover:bg-green-800 text-white py-2 px-6 rounded font-semibold disabled:opacity-50" disabled>Checkout</button>
+        <button id="checkout-btn"
+          class="bg-green-700 hover:bg-green-800 text-white py-2 px-6 rounded font-semibold disabled:opacity-50"
+          disabled>Checkout</button>
       </footer>
     </div>
   </div>
 
   <script>
-    const medicines = [
-      { id: 1, name: "Paracetamol", usage: "Pain reliever and fever reducer", price: 50, dose: "500mg", image: "https://share.google/images/VHM9DnH6QwTiKep2f" },
-      { id: 2, name: "Ibuprofen", usage: "Reduces inflammation and pain", price: 80, dose: "200mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Ibuprofen_200mg_tablets.jpg/220px-Ibuprofen_200mg_tablets.jpg" },
-      { id: 3, name: "Amoxicillin", usage: "Antibiotic for bacterial infections", price: 120, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Amoxicillin_capsules.jpg/220px-Amoxicillin_capsules.jpg" },
-      { id: 4, name: "Azithromycin", usage: "Antibiotic for respiratory infections", price: 150, dose: "250mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Azithromycin_250mg_tablets.jpg/220px-Azithromycin_250mg_tablets.jpg" },
-      { id: 5, name: "Ciprofloxacin", usage: "Antibiotic for urinary tract infections", price: 130, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ciprofloxacin_500mg_tablets.jpg/220px-Ciprofloxacin_500mg_tablets.jpg" },
-      { id: 6, name: "Metformin", usage: "Controls blood sugar in type 2 diabetes", price: 90, dose: "500mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Metformin_500mg_tablets.jpg/220px-Metformin_500mg_tablets.jpg" },
-      { id: 7, name: "Atorvastatin", usage: "Lowers cholesterol", price: 110, dose: "20mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atorvastatin_20mg_tablets.jpg/220px-Atorvastatin_20mg_tablets.jpg" },
-      { id: 8, name: "Losartan", usage: "Treats high blood pressure", price: 100, dose: "50mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Losartan_50mg_tablets.jpg/220px-Losartan_50mg_tablets.jpg" },
-      { id: 9, name: "Omeprazole", usage: "Reduces stomach acid", price: 70, dose: "20mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Omeprazole_capsules.jpg/220px-Omeprazole_capsules.jpg" },
-      { id: 10, name: "Pantoprazole", usage: "Treats acid reflux and ulcers", price: 75, dose: "40mg", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Pantoprazole_40mg_tablets.jpg/220px-Pantoprazole_40mg_tablets.jpg" },
-    ];
-
-    // Replicate to 90 items for demo
-    while (medicines.length < 90) {
-      const base = medicines[medicines.length % 10];
-      medicines.push({
-        id: medicines.length + 1,
-        name: base.name + " " + (medicines.length + 1),
-        usage: base.usage,
-        price: base.price,
-        dose: base.dose,
-        image: base.image
-      });
-    }
-
-    const medicineList = document.getElementById('medicine-list');
-    const cartCount = document.getElementById('cart-count');
+    const DISCOUNT_PCT = 20;
+    const cards = document.querySelectorAll('.med-card');
+    const cartBtn = document.getElementById('cart-btn');
     const cartModal = document.getElementById('cart-modal');
     const cartCloseBtn = document.getElementById('cart-close-btn');
     const cartItemsContainer = document.getElementById('cart-items');
+    const cartCountEl = document.getElementById('cart-count');
     const cartTotalEl = document.getElementById('cart-total');
     const checkoutBtn = document.getElementById('checkout-btn');
-    const cartBtn = document.getElementById('cart-btn');
 
-    let cart = {};
+    const medicines = {};
+    cards.forEach(card => {
+      const id = Number(card.dataset.id);
+      medicines[id] = {
+        id,
+        name: card.dataset.name,
+        dose: card.dataset.dose,
+        price: Number(card.dataset.price)
+      };
+    });
 
-    function formatPrice(price) {
-      return "₹" + price.toFixed(2);
-    }
+    let cart = JSON.parse(localStorage.getItem('mq_cart_html_v1') || '{}');
 
-    function renderMedicines() {
-      medicineList.innerHTML = '';
-      medicines.forEach(med => {
-        const discountPrice = med.price * 0.8; // 20% discount
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-lg shadow-lg border border-gray-300 p-4 flex flex-col hover:shadow-2xl transition-shadow";
-
-        card.innerHTML = `
-          <img src="${med.image}" alt="${med.name} bottle" class="w-full h-40 object-contain rounded-md mb-3" loading="lazy" />
-          <h2 class="text-xl font-semibold text-gray-900 mb-1">${med.name} <span class="text-green-700 font-normal">(${med.dose})</span></h2>
-          <p class="text-gray-700 text-sm mb-3">${med.usage}</p>
-          <div class="mb-4">
-            <span class="line-through text-gray-400 mr-2">${formatPrice(med.price)}</span>
-            <span class="text-green-600 font-bold text-lg">${formatPrice(discountPrice)}</span>
-            <span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">20% OFF</span>
-          </div>
-          <div class="mt-auto">
-            <button aria-label="Add ${med.name} to cart" data-id="${med.id}" class="add-to-cart bg-green-700 hover:bg-green-800 text-white py-2 rounded w-full transition">Add to Cart</button>
-          </div>
-        `;
-
-        medicineList.appendChild(card);
-      });
-    }
+    function saveCart() { localStorage.setItem('mq_cart_html_v1', JSON.stringify(cart)); }
+    function discount(price) { return +(price * (1 - DISCOUNT_PCT / 100)).toFixed(2); }
+    function formatPrice(p) { return '₹' + Number(p).toFixed(2); }
 
     function updateCartCount() {
-      const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
-      cartCount.textContent = totalItems;
-      checkoutBtn.disabled = totalItems === 0;
+      const total = Object.values(cart).reduce((s, q) => s + q, 0);
+      cartCountEl.textContent = total;
+      checkoutBtn.disabled = total === 0;
+      saveCart();
     }
 
-    function updateCardQuantity(medId) {
-      const card = [...medicineList.children].find(card => {
-        const btn = card.querySelector('button.add-to-cart, div.quantity-controls');
-        if (!btn) return false;
-        if (btn.dataset.id) return parseInt(btn.dataset.id) === medId;
-        const qtyDiv = card.querySelector('div.quantity-controls');
-        return qtyDiv && parseInt(qtyDiv.dataset.id) === medId;
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.id);
+        cart[id] = (cart[id] || 0) + 1;
+        updateCardControls(id); updateCartCount();
       });
+    });
 
+    function updateCardControls(medId) {
+      const card = [...document.querySelectorAll('.med-card')].find(c => Number(c.dataset.id) === medId);
       if (!card) return;
-
-      const quantity = cart[medId] || 0;
-      const container = card.querySelector('div.mt-auto');
-
-      if (quantity === 0) {
-        container.innerHTML = `
-          <button aria-label="Add ${medicines[medId - 1].name} to cart" data-id="${medId}" class="add-to-cart bg-green-700 hover:bg-green-800 text-white py-2 rounded w-full transition">Add to Cart</button>
-        `;
+      const container = card.querySelector('.mt-auto') || card.appendChild(document.createElement('div'));
+      container.classList.add('mt-auto');
+      const qty = cart[medId] || 0;
+      if (qty === 0) {
+        container.innerHTML = `<button class="add-to-cart w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded" data-id="${medId}">Add to Cart</button>`;
+        container.querySelector('.add-to-cart').addEventListener('click', () => {
+          cart[medId] = (cart[medId] || 0) + 1; updateCardControls(medId); updateCartCount();
+        });
       } else {
-        container.innerHTML = `
-          <div class="quantity-controls flex items-center justify-center space-x-3" data-id="${medId}">
-            <button aria-label="Decrease quantity of ${medicines[medId - 1].name}" class="decrease bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold rounded px-3 py-1 select-none">−</button>
-            <span class="font-semibold text-lg text-gray-900">${quantity}</span>
-            <button aria-label="Increase quantity of ${medicines[medId - 1].name}" class="increase bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 select-none">+</button>
-          </div>
-        `;
+        container.innerHTML = `<div class="quantity-controls flex items-center justify-center space-x-3" data-id="${medId}">
+        <button class="decrease bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold rounded px-3 py-1 select-none">−</button>
+        <span class="font-semibold text-lg text-gray-900">${qty}</span>
+        <button class="increase bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 select-none">+</button>
+      </div>`;
+        container.querySelector('.increase').addEventListener('click', () => { cart[medId] = (cart[medId] || 0) + 1; updateCardControls(medId); updateCartCount(); });
+        container.querySelector('.decrease').addEventListener('click', () => { cart[medId] = Math.max(0, (cart[medId] || 0) - 1); if (cart[medId] === 0) delete cart[medId]; updateCardControls(medId); updateCartCount(); });
       }
     }
 
-    function addToCart(id) {
-      if (!cart[id]) {
-        cart[id] = 1;
-      } else {
-        cart[id]++;
-      }
-      updateCardQuantity(id);
-      updateCartCount();
-    }
+    Object.keys(medicines).forEach(id => updateCardControls(Number(id)));
 
-    function increaseQuantity(id) {
-      if (!cart[id]) cart[id] = 0;
-      cart[id]++;
-      updateCardQuantity(id);
-      updateCartCount();
-      renderCartItems();
-    }
-
-    function decreaseQuantity(id) {
-      if (!cart[id]) return;
-      cart[id]--;
-      if (cart[id] <= 0) {
-        delete cart[id];
-      }
-      updateCardQuantity(id);
-      updateCartCount();
-      renderCartItems();
-    }
-
-    function renderCartItems() {
+    function renderCartModal() {
       cartItemsContainer.innerHTML = '';
-      const cartIds = Object.keys(cart);
-      if (cartIds.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="text-center text-gray-600">Your cart is empty.</p>';
-        cartTotalEl.textContent = formatPrice(0);
-        checkoutBtn.disabled = true;
-        return;
-      }
-
+      const ids = Object.keys(cart);
+      if (ids.length === 0) { cartItemsContainer.innerHTML = '<p class="text-center text-gray-600">Your cart is empty.</p>'; cartTotalEl.textContent = formatPrice(0); return; }
       let total = 0;
-
-      cartIds.forEach(idStr => {
-        const id = parseInt(idStr);
-        const med = medicines.find(m => m.id === id);
-        const quantity = cart[id];
-        const discountPrice = med.price * 0.8;
-        const subtotal = discountPrice * quantity;
-        total += subtotal;
-
+      ids.forEach(idStr => {
+        const id = Number(idStr), qty = cart[id], med = medicines[id];
+        const dPrice = discount(med.price); const sub = +(dPrice * qty).toFixed(2); total += sub;
         const item = document.createElement('div');
-        item.className = "flex items-center space-x-4 border-b border-gray-200 py-3";
-
-        item.innerHTML = `
-          <img src="${med.image}" alt="${med.name} bottle" class="w-16 h-16 object-contain rounded" />
-          <div class="flex-grow">
-            <h3 class="font-semibold text-gray-900">${med.name} <span class="text-green-700 font-normal">(${med.dose})</span></h3>
-            <p class="text-gray-700 text-sm">${med.usage}</p>
-            <p class="text-gray-900 font-semibold mt-1">Price: ${formatPrice(discountPrice)} × ${quantity} = ${formatPrice(subtotal)}</p>
-          </div>
-          <div class="flex flex-col items-center space-y-1">
-            <button aria-label="Increase quantity of ${med.name}" class="increase-cart bg-green-700 hover:bg-green-800 text-white font-bold rounded px-3 py-1 select-none">+</button>
-            <span class="font-semibold text-lg text-gray-900">${quantity}</span>
-            <button aria-label="Decrease quantity of ${med.name}" class="decrease-cart bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold rounded px-3 py-1 select-none">−</button>
-            <button aria-label="Remove ${med.name} from cart" class="remove-cart text-red-600 hover:text-red-800 text-sm mt-1">Remove</button>
-          </div>
-        `;
-
+        item.className = 'flex items-center justify-between border-b py-3';
+        item.innerHTML = `<div><div class="font-semibold">${med.name} (${med.dose})</div><div class="text-sm text-gray-600">${formatPrice(dPrice)} × ${qty} = <strong>${formatPrice(sub)}</strong></div></div>
+        <div class="flex items-center gap-2">
+          <button data-id="${id}" class="decrease px-3 py-1 bg-gray-200 rounded">−</button>
+          <span class="font-semibold">${qty}</span>
+          <button data-id="${id}" class="increase px-3 py-1 bg-green-600 text-white rounded">+</button>
+          <button data-id="${id}" class="remove text-red-600 text-sm">Remove</button>
+        </div>`;
         cartItemsContainer.appendChild(item);
       });
-
       cartTotalEl.textContent = formatPrice(total);
-      checkoutBtn.disabled = false;
+      cartItemsContainer.querySelectorAll('.increase').forEach(b => b.addEventListener('click', e => { const id = Number(e.currentTarget.dataset.id); cart[id] = (cart[id] || 0) + 1; updateCardControls(id); renderCartModal(); updateCartCount(); }));
+      cartItemsContainer.querySelectorAll('.decrease').forEach(b => b.addEventListener('click', e => { const id = Number(e.currentTarget.dataset.id); cart[id] = Math.max(0, (cart[id] || 0) - 1); if (cart[id] === 0) delete cart[id]; updateCardControls(id); renderCartModal(); updateCartCount(); }));
+      cartItemsContainer.querySelectorAll('.remove').forEach(b => b.addEventListener('click', e => { const id = Number(e.currentTarget.dataset.id); delete cart[id]; updateCardControls(id); renderCartModal(); updateCartCount(); }));
     }
 
-    // Event delegation for medicine list buttons
-    medicineList.addEventListener('click', e => {
-      if (e.target.classList.contains('add-to-cart')) {
-        const id = parseInt(e.target.dataset.id);
-        addToCart(id);
-      } else if (e.target.classList.contains('increase')) {
-        const parent = e.target.closest('div.quantity-controls');
-        const id = parseInt(parent.dataset.id);
-        increaseQuantity(id);
-      } else if (e.target.classList.contains('decrease')) {
-        const parent = e.target.closest('div.quantity-controls');
-        const id = parseInt(parent.dataset.id);
-        decreaseQuantity(id);
-      }
-    });
-
-     const accountBtn = document.getElementById('account-btn');
-  const dropdown = document.getElementById('account-dropdown');
-  accountBtn.addEventListener('click', () => {
-    const isHidden = dropdown.classList.contains('hidden');
-    if (isHidden) {
-      dropdown.classList.remove('hidden');
-      accountBtn.setAttribute('aria-expanded', 'true');
-    } else {
-      dropdown.classList.add('hidden');
-      accountBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-  // Optional: Click outside to close dropdown
-  document.addEventListener('click', (event) => {
-    if (!accountBtn.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.classList.add('hidden');
-      accountBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-    // Event delegation for cart modal buttons
-    cartItemsContainer.addEventListener('click', e => {
-      const itemDiv = e.target.closest('div.flex.items-center');
-      if (!itemDiv) return;
-
-      const medName = itemDiv.querySelector('h3').textContent;
-      // Find medicine id by name (safe because names are unique here)
-      const med = medicines.find(m => medName.includes(m.name));
-      if (!med) return;
-      const id = med.id;
-
-      if (e.target.classList.contains('increase-cart')) {
-        increaseQuantity(id);
-      } else if (e.target.classList.contains('decrease-cart')) {
-        decreaseQuantity(id);
-      } else if (e.target.classList.contains('remove-cart')) {
-        delete cart[id];
-        updateCardQuantity(id);
-        updateCartCount();
-        renderCartItems();
-      }
-    });
-
-    // Cart modal open/close
-    cartBtn.addEventListener('click', () => {
-      cartModal.classList.remove('hidden');
-      cartBtn.setAttribute('aria-expanded', 'true');
-      renderCartItems();
-      // Trap focus inside modal (optional enhancement)
-      cartCloseBtn.focus();
-    });
-
-    cartCloseBtn.addEventListener('click', () => {
-      cartModal.classList.add('hidden');
-      cartBtn.setAttribute('aria-expanded', 'false');
-      cartBtn.focus();
-    });
-
-    
-    // Close modal on outside click
-    cartModal.addEventListener('click', e => {
-      if (e.target === cartModal) {
-        cartModal.classList.add('hidden');
-        cartBtn.setAttribute('aria-expanded', 'false');
-        cartBtn.focus();
-      }
-    });
-
-    // Close modal on Escape key
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && !cartModal.classList.contains('hidden')) {
-        cartModal.classList.add('hidden');
-        cartBtn.setAttribute('aria-expanded', 'false');
-        cartBtn.focus();
-      }
-    });
-
-    
-
-    // Checkout button click (demo)
-    checkoutBtn.addEventListener('click', () => {
-      alert('Checkout functionality is not implemented in this demo.');
-    });
-
-    renderMedicines();
+    cartBtn.addEventListener('click', () => { renderCartModal(); cartModal.classList.remove('hidden'); });
+    cartCloseBtn.addEventListener('click', () => { cartModal.classList.add('hidden'); });
+    cartModal.addEventListener('click', e => { if (e.target === cartModal) cartModal.classList.add('hidden'); });
+    checkoutBtn.addEventListener('click', () => alert('Checkout demo — not implemented.'));
     updateCartCount();
-  </script>
 
+    // IMAGE: local-first path and fallback to remote if missing
+    const LOCAL_BASE = 'images/med-';
+    const LOCAL_EXT = '.jpg';
+    const REMOTE_FALLBACK = id => `https://source.unsplash.com/400x300/?medicine,tablet&sig=${id}`;
+
+    document.querySelectorAll('.med-card').forEach(card => {
+      const id = card.dataset.id;
+      const img = card.querySelector('img');
+      img.loading = 'lazy';
+      // set local src (overwrites inline if any)
+      img.src = `${LOCAL_BASE}${id}${LOCAL_EXT}`;
+      img.onerror = () => { img.onerror = null; img.src = REMOTE_FALLBACK(id); };
+    });
+    // ACCOUNT DROPDOWN: toggle, keyboard nav, accessibility
+        (function () {
+          // Wait till DOM is ready
+          document.addEventListener('DOMContentLoaded', () => {
+            const accountBtn = document.getElementById('account-btn');
+            const dropdown = document.getElementById('account-dropdown');
+            const arrow = document.getElementById('account-arrow');
+
+            if (!accountBtn || !dropdown) {
+              console.warn('Account dropdown: required elements not found (account-btn or account-dropdown).');
+              return;
+            }
+
+            // Utility: show / hide
+            function showDropdown() {
+              dropdown.classList.remove('hidden');
+              accountBtn.setAttribute('aria-expanded', 'true');
+              if (arrow) arrow.classList.add('rotate-180');
+              // Move focus to first menu item for keyboard users
+              const firstItem = dropdown.querySelector('[role="menuitem"], a, button');
+              if (firstItem) firstItem.focus();
+            }
+            function hideDropdown() {
+              dropdown.classList.add('hidden');
+              accountBtn.setAttribute('aria-expanded', 'false');
+              if (arrow) arrow.classList.remove('rotate-180');
+            }
+            function toggleDropdown() {
+              if (dropdown.classList.contains('hidden')) showDropdown();
+              else hideDropdown();
+            }
+
+            // Prevent multiple event wiring (idempotent)
+            accountBtn.removeEventListener('click', accountBtn._acctClickHandler);
+            accountBtn._acctClickHandler = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleDropdown();
+            };
+            accountBtn.addEventListener('click', accountBtn._acctClickHandler);
+
+            // Keyboard: Enter / Space toggles; ArrowDown opens and focuses first item
+            accountBtn.removeEventListener('keydown', accountBtn._acctKeyHandler);
+            accountBtn._acctKeyHandler = function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleDropdown();
+              } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (dropdown.classList.contains('hidden')) showDropdown();
+                else {
+                  // focus first item
+                  const first = dropdown.querySelector('[role="menuitem"], a, button');
+                  if (first) first.focus();
+                }
+              } else if (e.key === 'Escape') {
+                hideDropdown();
+                accountBtn.focus();
+              }
+            };
+            accountBtn.addEventListener('keydown', accountBtn._acctKeyHandler);
+
+            // Click outside closes the dropdown
+            window.removeEventListener('click', window._acctOutsideHandler);
+            window._acctOutsideHandler = function (e) {
+              if (!accountBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                hideDropdown();
+              }
+            };
+            window.addEventListener('click', window._acctOutsideHandler);
+
+            // Close on Escape when dropdown or page has focus
+            window.removeEventListener('keydown', window._acctEscHandler);
+            window._acctEscHandler = function (e) {
+              if (e.key === 'Escape') {
+                hideDropdown();
+                // optionally return focus to account button
+                // accountBtn.focus();
+              }
+            };
+            window.addEventListener('keydown', window._acctEscHandler);
+
+            // Optional: close when a menu item is clicked (hide for better UX on SPA)
+            dropdown.querySelectorAll('[role="menuitem"], a, button').forEach(el => {
+              el.removeEventListener('click', el._acctMenuClick);
+              el._acctMenuClick = function () {
+                // Delay hiding slightly so link navigations still trigger
+                setTimeout(() => hideDropdown(), 80);
+              };
+              el.addEventListener('click', el._acctMenuClick);
+            });
+
+            // Accessibility: trap focus inside dropdown while open (basic)
+            dropdown.addEventListener('keydown', (e) => {
+              if (e.key === 'Tab') {
+                const focusable = dropdown.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                  e.preventDefault();
+                  last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                  e.preventDefault();
+                  first.focus();
+                }
+              } else if (e.key === 'Escape') {
+                hideDropdown();
+                accountBtn.focus();
+              } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                // basic arrow navigation
+                const items = Array.from(dropdown.querySelectorAll('[role="menuitem"], a, button'));
+                if (!items.length) return;
+                e.preventDefault();
+                const idx = items.indexOf(document.activeElement);
+                if (e.key === 'ArrowDown') {
+                  const next = items[(idx + 1) % items.length];
+                  next.focus();
+                } else {
+                  const prev = items[(idx - 1 + items.length) % items.length];
+                  prev.focus();
+                }
+              }
+            });
+
+            // Initialize aria-expanded based on initial visibility
+            if (dropdown.classList.contains('hidden')) accountBtn.setAttribute('aria-expanded', 'false');
+            else accountBtn.setAttribute('aria-expanded', 'true');
+          });
+  })();
+
+
+  </script>
 </body>
+
 </html>
