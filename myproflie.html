@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mediiquick - Your Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      }
+
+      .profile-card {
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .medical-badge {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      }
+
+      .info-item {
+        border-left: 3px solid #3b82f6;
+      }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <div class="flex items-center justify-center mb-4">
+        <div
+          class="w-14 h-14 rounded-full medical-badge flex items-center justify-center mr-3"
+        >
+          <i class="fas fa-heartbeat text-white text-2xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800">Mediiquick</h1>
+      </div>
+      <p class="text-gray-600">Your personalized medical profile</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Profile Photo and Basic Info -->
+      <div class="profile-card bg-white rounded-xl p-6 lg:col-span-1">
+        <div class="text-center">
+          <div class="mx-auto mb-4 relative">
+            <img
+              src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
+              alt="Professional doctor profile photo in white coat with stethoscope"
+              class="w-32 h-32 rounded-full mx-auto border-4 border-blue-100 object-cover"
+            />
+            <div
+              class="absolute bottom-0 right-4 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center border-2 border-white"
+            >
+              <i class="fas fa-check text-white"></i>
+            </div>
+          </div>
+          <h2 class="text-xl font-bold text-gray-800 profile-name">Dr. Rajesh Kumar</h2>
+          <p class="text-blue-600 font-medium">Cardiologist</p>
+        </div>
+
+        <div class="mt-6 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"
+            >
+              <i class="fas fa-id-card text-blue-600"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600">User  ID</p>
+              <p class="text-gray-800">MEDQ123456</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"
+            >
+              <i class="fas fa-briefcase-medical text-blue-600"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600">Experience</p>
+              <p class="text-gray-800">15 years</p>
+            </div>
+          </div>
+
+          <button
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors"
+          >
+            <i class="fas fa-edit"></i>
+            <span>Edit Profile</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="profile-card bg-white rounded-xl p-6 lg:col-span-2">
+        <div class="flex items-center space-x-2 mb-6">
+          <div
+            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <i class="fas fa-user text-blue-600"></i>
+          </div>
+          <h2 class="text-xl font-bold text-gray-800">Personal Information</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="info-item pl-4">
+            <div class="flex items-center space-x-3 mb-2">
+              <i class="fas fa-envelope text-blue-500"></i>
+              <p class="text-sm font-medium text-gray-600">Email</p>
+            </div>
+            <p class="text-gray-800 profile-email">rajesh.kumar@example.com</p>
+          </div>
+
+          <div class="info-item pl-4">
+            <div class="flex items-center space-x-3 mb-2">
+              <i class="fas fa-phone text-blue-500"></i>
+              <p class="text-sm font-medium text-gray-600">Phone Number</p>
+            </div>
+            <p class="text-gray-800 profile-phone">+91 9876543210</p>
+          </div>
+
+          <div class="info-item pl-4">
+            <div class="flex items-center space-x-3 mb-2">
+              <i class="fas fa-birthday-cake text-blue-500"></i>
+              <p class="text-sm font-medium text-gray-600">Date of Birth</p>
+            </div>
+            <p class="text-gray-800">15-08-1985</p>
+          </div>
+
+          <div class="info-item pl-4">
+            <div class="flex items-center space-x-3 mb-2">
+              <i class="fas fa-map-marker-alt text-blue-500"></i>
+              <p class="text-sm font-medium text-gray-600">Address</p>
+            </div>
+            <p class="text-gray-800">123 Medical Lane, New Delhi, India</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medical Information -->
+      <div class="profile-card bg-white rounded-xl p-6 lg:col-span-3">
+        <div class="flex items-center space-x-2 mb-6">
+          <div
+            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <i class="fas fa-heartbeat text-blue-600"></i>
+          </div>
+          <h2 class="text-xl font-bold text-gray-800">Medical Information</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Registration Number</h3>
+            <p class="text-gray-600">MED123456789</p>
+          </div>
+
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Blood Group</h3>
+            <p class="text-gray-600">B+</p>
+          </div>
+
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Allergies</h3>
+            <p class="text-gray-600">None</p>
+          </div>
+
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Emergency Contact</h3>
+            <p class="text-gray-600">+91 9123456789</p>
+          </div>
+
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Last Login</h3>
+            <p class="text-gray-600">2024-01-15 14:30</p>
+          </div>
+
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-700 mb-2">Specialization</h3>
+            <p class="text-gray-600">Cardiologist</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Note -->
+    <div
+      class="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-200"
+    >
+      <div class="flex items-center space-x-3 mb-3">
+        <div
+          class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center"
+        >
+          <i class="fas fa-shield-alt text-white"></i>
+        </div>
+        <h3 class="font-semibold text-blue-800">Security Information</h3>
+      </div>
+      <p class="text-sm text-blue-700">
+        Your profile information is secure and accessible only to authorized medical personnel.
+        Regular security audits ensure your data remains protected.
+      </p>
+    </div>
+
+    <!-- Login Methods -->
+    <div class="mt-8 p-6 bg-white rounded-xl">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Login Methods</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="border rounded-lg p-4 text-center cursor-pointer">
+          <div
+            class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"
+          >
+            <i class="fas fa-user-circle text-green-600"></i>
+          </div>
+          <h4 class="font-medium text-gray-800">ID and Password</h4>
+          <p class="text-sm text-gray-600 mt-1">Login with your user ID and password</p>
+        </div>
+
+        <div class="border rounded-lg p-4 text-center cursor-pointer">
+          <div
+            class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3"
+          >
+            <i class="fas fa-mobile-alt text-blue-600"></i>
+          </div>
+          <h4 class="font-medium text-gray-800">Mobile Number</h4>
+          <p class="text-sm text-gray-600 mt-1">Login with your mobile number and OTP</p>
+        </div>
+
+        <div class="border rounded-lg p-4 text-center cursor-pointer">
+          <div
+            class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"
+          >
+            <i class="fas fa-fingerprint text-purple-600"></i>
+          </div>
+          <h4 class="font-medium text-gray-800">Biometric</h4>
+          <p class="text-sm text-gray-600 mt-1">Login with fingerprint or face ID</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to simulate login method selection
+    function setLoginMethod(method) {
+      localStorage.setItem("loginMethod", method);
+      alert("Login method set to: " + method);
+      updateProfileData();
+    }
+
+    // Function to update profile based on login method
+    function updateProfileData() {
+      const loginMethod = localStorage.getItem("loginMethod");
+      const profileName = document.querySelector(".profile-name");
+      const profileEmail = document.querySelector(".profile-email");
+      const profilePhone = document.querySelector(".profile-phone");
+
+      if (loginMethod === "Mobile Number") {
+        profileName.textContent = "Dr. Priya Sharma";
+        profileEmail.textContent = "priya.sharma@example.com";
+        profilePhone.textContent = "+91 9123456789";
+      } else {
+        profileName.textContent = "Dr. Rajesh Kumar";
+        profileEmail.textContent = "rajesh.kumar@example.com";
+        profilePhone.textContent = "+91 9876543210";
+      }
+    }
+
+    // Initialize profile data on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      updateProfileData();
+
+      // Add event listeners to login method cards
+      const loginCards = document.querySelectorAll(".border.rounded-lg");
+      loginCards.forEach((card) => {
+        card.addEventListener("click", function () {
+          const method = this.querySelector("h4").textContent;
+          setLoginMethod(method);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
