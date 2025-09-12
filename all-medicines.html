@@ -566,6 +566,138 @@
       img.src = `${LOCAL_BASE}${id}${LOCAL_EXT}`;
       img.onerror = () => { img.onerror = null; img.src = REMOTE_FALLBACK(id); };
     });
+    // ACCOUNT DROPDOWN: toggle, keyboard nav, accessibility
+        (function () {
+          // Wait till DOM is ready
+          document.addEventListener('DOMContentLoaded', () => {
+            const accountBtn = document.getElementById('account-btn');
+            const dropdown = document.getElementById('account-dropdown');
+            const arrow = document.getElementById('account-arrow');
+
+            if (!accountBtn || !dropdown) {
+              console.warn('Account dropdown: required elements not found (account-btn or account-dropdown).');
+              return;
+            }
+
+            // Utility: show / hide
+            function showDropdown() {
+              dropdown.classList.remove('hidden');
+              accountBtn.setAttribute('aria-expanded', 'true');
+              if (arrow) arrow.classList.add('rotate-180');
+              // Move focus to first menu item for keyboard users
+              const firstItem = dropdown.querySelector('[role="menuitem"], a, button');
+              if (firstItem) firstItem.focus();
+            }
+            function hideDropdown() {
+              dropdown.classList.add('hidden');
+              accountBtn.setAttribute('aria-expanded', 'false');
+              if (arrow) arrow.classList.remove('rotate-180');
+            }
+            function toggleDropdown() {
+              if (dropdown.classList.contains('hidden')) showDropdown();
+              else hideDropdown();
+            }
+
+            // Prevent multiple event wiring (idempotent)
+            accountBtn.removeEventListener('click', accountBtn._acctClickHandler);
+            accountBtn._acctClickHandler = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleDropdown();
+            };
+            accountBtn.addEventListener('click', accountBtn._acctClickHandler);
+
+            // Keyboard: Enter / Space toggles; ArrowDown opens and focuses first item
+            accountBtn.removeEventListener('keydown', accountBtn._acctKeyHandler);
+            accountBtn._acctKeyHandler = function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleDropdown();
+              } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (dropdown.classList.contains('hidden')) showDropdown();
+                else {
+                  // focus first item
+                  const first = dropdown.querySelector('[role="menuitem"], a, button');
+                  if (first) first.focus();
+                }
+              } else if (e.key === 'Escape') {
+                hideDropdown();
+                accountBtn.focus();
+              }
+            };
+            accountBtn.addEventListener('keydown', accountBtn._acctKeyHandler);
+
+            // Click outside closes the dropdown
+            window.removeEventListener('click', window._acctOutsideHandler);
+            window._acctOutsideHandler = function (e) {
+              if (!accountBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                hideDropdown();
+              }
+            };
+            window.addEventListener('click', window._acctOutsideHandler);
+
+            // Close on Escape when dropdown or page has focus
+            window.removeEventListener('keydown', window._acctEscHandler);
+            window._acctEscHandler = function (e) {
+              if (e.key === 'Escape') {
+                hideDropdown();
+                // optionally return focus to account button
+                // accountBtn.focus();
+              }
+            };
+            window.addEventListener('keydown', window._acctEscHandler);
+
+            // Optional: close when a menu item is clicked (hide for better UX on SPA)
+            dropdown.querySelectorAll('[role="menuitem"], a, button').forEach(el => {
+              el.removeEventListener('click', el._acctMenuClick);
+              el._acctMenuClick = function () {
+                // Delay hiding slightly so link navigations still trigger
+                setTimeout(() => hideDropdown(), 80);
+              };
+              el.addEventListener('click', el._acctMenuClick);
+            });
+
+            // Accessibility: trap focus inside dropdown while open (basic)
+            dropdown.addEventListener('keydown', (e) => {
+              if (e.key === 'Tab') {
+                const focusable = dropdown.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                  e.preventDefault();
+                  last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                  e.preventDefault();
+                  first.focus();
+                }
+              } else if (e.key === 'Escape') {
+                hideDropdown();
+                accountBtn.focus();
+              } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                // basic arrow navigation
+                const items = Array.from(dropdown.querySelectorAll('[role="menuitem"], a, button'));
+                if (!items.length) return;
+                e.preventDefault();
+                const idx = items.indexOf(document.activeElement);
+                if (e.key === 'ArrowDown') {
+                  const next = items[(idx + 1) % items.length];
+                  next.focus();
+                } else {
+                  const prev = items[(idx - 1 + items.length) % items.length];
+                  prev.focus();
+                }
+              }
+            });
+
+            // Initialize aria-expanded based on initial visibility
+            if (dropdown.classList.contains('hidden')) accountBtn.setAttribute('aria-expanded', 'false');
+            else accountBtn.setAttribute('aria-expanded', 'true');
+          });
+  })();
+
+
   </script>
 </body>
 
